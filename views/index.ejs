@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="style.css">
   <title>Reminder</title>
-  <style type="text/css">
+  <style>
     html {
       background-color: #E4E9FD;
       background-image: -webkit-linear-gradient(65deg, rgb(219, 131, 227) 50%, rgb(228, 240, 253) 50%);
@@ -20,7 +19,7 @@
     }
 
     .box {
-      max-width: 1000px;
+      max-width: 800px;
       margin: 50px auto;
       background: white;
       border-radius: 5px;
@@ -31,6 +30,7 @@
     #heading {
       background-color: rgb(219, 131, 227);
       text-align: center;
+      padding: 0;
     }
 
     .item {
@@ -54,7 +54,6 @@
 
     form {
       text-align: center;
-      margin-left: 20px;
     }
 
     button {
@@ -95,19 +94,18 @@
 
 <body>
   <div class="box" id="heading">
-    <h1>yeh <%= name %> boi</h1>
+    <h1 id="heading">Your Reminders</h1>
   </div>
   <div class="box">
     <% newItems.forEach(item => { %>
     <div class="item">
-      <p><%= item.message + ' At ' + item.time + ' On ' + item.date  %></p>
+      <p><%= item.message + ' On ' + item.dateTime.toLocaleString('en-US')  %></p>
     </div>
     <% }); %>
     <form class="item" action="/" method="post">
       <input type="text" name="message" placeholder="Message" autocomplete="off">
       <input type="tel" name="number" placeholder="Number" />
-      <input type="date" name="date" placeholder="11-11-2020" />
-      <input type="time" name="time" />
+      <input type="datetime-local" name="dateTime">
       <button type="submit" name="list"> + </button>
     </form>
   </div>
