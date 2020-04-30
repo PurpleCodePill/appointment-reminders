@@ -89,6 +89,12 @@
       outline: none;
       box-shadow: inset 0 -3px 0 0 rgb(219, 131, 227);
     }
+
+    .errorMsg {
+      text-align: center;
+      padding-left: 20px;
+      color: rgb(243, 77, 105);
+    }
   </style>
 </head>
 
@@ -102,9 +108,14 @@
       <p><%= item.message + ' On ' + item.dateTime.toLocaleString('en-US')  %></p>
     </div>
     <% }); %>
+    <% if(error) { %>
+    <div class="errorMsg">
+      <h3> <%= error %> </h3>
+    </div>
+    <% } %>
     <form class="item" action="/" method="post">
-      <input type="text" name="message" placeholder="Message" autocomplete="off">
-      <input type="tel" name="number" placeholder="Number" />
+      <input type="text" name="message" placeholder="Message" autocomplete="off" value=<%= message %>>
+      <input type="tel" name="number" placeholder="Number" value=<%= number %>>
       <input type="datetime-local" name="dateTime">
       <button type="submit" name="list"> + </button>
     </form>

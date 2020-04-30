@@ -7,12 +7,15 @@ require('dotenv').config()
 
 const app = express()
 let items = []
+let errorMsgs = false
+let message = ''
+let number = ''
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', function (req, res) {
-  res.render('index', { newItems: items })
+  res.render('index', { newItems: items, error: errorMsgs, message: message, number: number })
 })
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID
@@ -77,9 +80,26 @@ app.post('/', function (req, res) {
     number: req.body.number,
     dateTime: req.body.dateTime
   }
+  if (item.message == '' || !item.number || !item.dateTime) {
+    message = item.message
+    number = item.number
+    errorMsgs = 'All fields are Required!!'
+    res.redirect('/')
+  }
+  else if (item.number.length != 13 || !String(item.number).startsWith('+')) {
+    errorMsgs = 'Please enter valid mobile number'
+    message = item.message
+    number = item.number
+    res.redirect('/')
+  }
+  else {
+    errorMsgs = false
+    message = ''
+    number = ''
 
-  items.push(item)
-  res.redirect('/')
+    items.push(item)
+    res.redirect('/')
+  }
 
 })
 app.listen(3000, () => console.log('listening on port 3000'))
