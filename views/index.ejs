@@ -1,125 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reminder</title>
+    <style>
+      html {
+        background-color: #e4e9fd;
+        background-image: -webkit-linear-gradient(
+          65deg,
+          rgb(219, 131, 227) 50%,
+          rgb(228, 240, 253) 50%
+        );
+        min-height: 100%;
+        font-family: 'helvetica', sans-serif;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reminder</title>
-  <style>
-    html {
-      background-color: #E4E9FD;
-      background-image: -webkit-linear-gradient(65deg, rgb(219, 131, 227) 50%, rgb(228, 240, 253) 50%);
-      min-height: 100%;
-      font-family: 'helvetica', sans-serif;
-    }
+      h1 {
+        color: #fff;
+        padding: 10px;
+      }
 
-    h1 {
-      color: #fff;
-      padding: 10px;
-    }
+      .box {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
 
-    .box {
-      max-width: 800px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 5px;
-      box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-    }
+      #heading {
+        background-color: rgb(219, 131, 227);
+        text-align: center;
+        padding: 0;
+      }
 
-    #heading {
-      background-color: rgb(219, 131, 227);
-      text-align: center;
-      padding: 0;
-    }
+      .item {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f1f1f1;
+      }
 
-    .item {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid #F1F1F1;
-    }
+      .item:last-child {
+        border-bottom: 0;
+      }
 
-    .item:last-child {
-      border-bottom: 0;
-    }
+      p {
+        margin: 0;
+        padding: 20px;
+        font-size: 20px;
+        font-weight: 200;
+        color: #000;
+      }
 
-    p {
-      margin: 0;
-      padding: 20px;
-      font-size: 20px;
-      font-weight: 200;
-      color: #000;
-    }
+      form {
+        text-align: center;
+      }
 
-    form {
-      text-align: center;
-    }
+      button {
+        min-height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border-color: transparent;
+        text-align: center;
+        background-color: rgb(219, 131, 227);
+        color: #fff;
+        font-size: 30px;
+        padding-bottom: 0px;
+        border-width: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
-    button {
-      min-height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      border-color: transparent;
-      text-align: center;
-      background-color: rgb(219, 131, 227);
-      color: #fff;
-      font-size: 30px;
-      padding-bottom: 0px;
-      border-width: 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
+      input {
+        color: grey;
+        text-align: center;
+        height: 60px;
+        top: 10px;
+        border: none;
+        background: transparent;
+        font-size: 20px;
+        font-weight: 200;
+        width: 180px;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
 
-    input {
-      color: grey;
-      text-align: center;
-      height: 60px;
-      top: 10px;
-      border: none;
-      background: transparent;
-      font-size: 20px;
-      font-weight: 200;
-      width: 180px;
-      margin-left: 20px;
-      margin-right: 10px;
-    }
+      input:focus {
+        outline: none;
+        box-shadow: inset 0 -3px 0 0 rgb(219, 131, 227);
+      }
 
-    input:focus {
-      outline: none;
-      box-shadow: inset 0 -3px 0 0 rgb(219, 131, 227);
-    }
+      .errorMsg {
+        text-align: center;
+        padding-left: 20px;
+        color: rgb(243, 77, 105);
+      }
+    </style>
+  </head>
 
-    .errorMsg {
-      text-align: center;
-      padding-left: 20px;
-      color: rgb(243, 77, 105);
-    }
-  </style>
-</head>
-
-<body>
-  <div class="box" id="heading">
-    <h1 id="heading">Your Reminders</h1>
-  </div>
-  <div class="box">
-    <% newItems.forEach(item => { %>
-    <div class="item">
-      <p><%= item.message + ' On ' + item.dateTime.toLocaleString('en-US')  %></p>
+  <body>
+    <div class="box" id="heading">
+      <h1 id="heading">Your Reminders</h1>
     </div>
-    <% }); %>
-    <% if(error) { %>
-    <div class="errorMsg">
-      <h3> <%= error %> </h3>
+    <div class="box">
+      <% newItems.forEach(item => { %>
+      <div class="item">
+        <p>
+          <%= item.message + ' On ' + item.dateTime.toLocaleString('en-US') %>
+        </p>
+      </div>
+      <% }); %> <% if(error) { %>
+      <div class="errorMsg">
+        <h3><%= error %></h3>
+      </div>
+      <% } %>
+      <form class="item" action="/" method="post">
+        <input
+          type="text"
+          name="message"
+          placeholder="Message"
+          autocomplete="off"
+          value="<%"
+          ="message"
+          %
+        />>
+        <input
+          type="tel"
+          name="number"
+          placeholder="Number"
+          value="<%"
+          ="number"
+          %
+        />>
+        <input type="datetime-local" name="dateTime" />
+        <button type="submit" name="list">+</button>
+      </form>
     </div>
-    <% } %>
-    <form class="item" action="/" method="post">
-      <input type="text" name="message" placeholder="Message" autocomplete="off" value=<%= message %>>
-      <input type="tel" name="number" placeholder="Number" value=<%= number %>>
-      <input type="datetime-local" name="dateTime">
-      <button type="submit" name="list"> + </button>
-    </form>
-  </div>
-</body>
-
+  </body>
 </html>
